@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pagination } from './Pagination'
 import { Tweet } from './Tweet'
+import { BigNumberInput } from './BigNumberInput'
 
 // generate an array with 'count' no. of object
 const makeTweets = count => 
@@ -27,11 +28,20 @@ class App extends React.Component {
 
   setPage = page => this.setState({ page })
 
+  requestTweets = numToRequest => {
+    this.setState({ tweets: makeTweets(numToRequest), page: 1 })
+  }
+
   render() {
     const { tweets, page } = this.state
 
     return (
       <div className="container">
+        <BigNumberInput
+          buttonText="Request Tweets"
+          defaultValue={30}
+          onSubmit={numToRequest => this.requestTweets(numToRequest)}
+        />
 
         <div className="list-group">
           <Paginate items={tweets} page={page} perPage={3}>
